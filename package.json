@@ -1,0 +1,78 @@
+{
+  "name": "testing-library-locators",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:radqut/testing-library-locators.git"
+  },
+  "author": "Michail Shcherbakov",
+  "keywords": [
+    "testing",
+    "ui",
+    "dom",
+    "jsdom",
+    "unit",
+    "integration",
+    "functional",
+    "end-to-end",
+    "e2e",
+    "locators",
+    "selectors"
+  ],
+  "bugs": {
+    "url": "https://github.com/radqut/testing-library-locators/issues"
+  },
+  "homepage": "https://github.com/radqut/testing-library-locators#readme",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "lint": "eslint --max-warnings 0 ."
+  },
+  "peerDependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/user-event": "^14.6.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "happy-dom": "^20.0.11",
+    "prettier": "^3.7.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tsdown": "^0.17.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.4",
+    "vite": "npm:rolldown-vite@7.2.10",
+    "vitest": "^4.0.15"
+  },
+  "overrides": {
+    "vite": "npm:rolldown-vite@7.2.10"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
