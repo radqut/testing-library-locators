@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "repository": {
     "type": "git",
-    "url": "git@github.com:radqut/testing-library-locators.git"
+    "url": "git+ssh://git@github.com/radqut/testing-library-locators.git"
   },
   "author": "Michail Shcherbakov",
   "keywords": [
