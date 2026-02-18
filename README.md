@@ -665,7 +665,5 @@ MIT © [radqut](https://github.com/radqut)
 
 ## Resources
 
-- [Documentation](./docs)
-- [Examples](./examples)
 - [Changelog](./CHANGELOG.md)
 - [Issues](https://github.com/radqut/testing-library-locators/issues)
