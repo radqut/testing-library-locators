@@ -2,13 +2,13 @@
 
 > Chainable and reusable locators for Testing Library
 
-A lightweight library that provides Testing Library-style query methods (like `getByRole`, `getByText`, `getByLabelText`) with chainable locator patterns, inspired by [Vitest Browser Mode Locators](https://vitest.dev/api/browser/locators.html) and [Playwright's locator API](https://playwright.dev/docs/locators).
+A lightweight library that provides Testing Library-style query methods (like `getByRole`, `getByText`, `getByLabelText`) with chainable locator patterns, inspired by [Vitest Browser Mode Locators](https://vitest.dev/api/browser/locators.html) and [Playwright's Locator API](https://playwright.dev/docs/locators).
 
 ## Features
 
 - **Fully compatible with Testing Library** - Use familiar queries like `getByRole`, `getByLabelText`, `getByText`
 - **Chainable API** - Compose complex reusable selectors like `getByRole("list").getByRole("listitem").nth(2)`
-- **Extendable** - Create custom locators to fit your project's needs
+- **Extensible** - Create custom locators to fit your project's needs
 - **Lightweight** - Small bundle size with minimal overhead
 - **TypeScript support** - Fully typed API with excellent IntelliSense
 
@@ -28,7 +28,7 @@ pnpm add -D testing-library-locators
 
 ### Peer dependencies
 
-Please note that `@testing-library/dom` and `@testing-library/user-event` are peer dependencies, meaning you should ensure they are installed before installing `testing-library-locators`.
+Please note that `@testing-library/dom` and `@testing-library/user-event` are peer dependencies, so ensure they are installed before installing `testing-library-locators`.
 
 ## Quick Start
 
@@ -68,7 +68,7 @@ await button.click(); // ✅ Finds element and clicks
 
 ### `getByRole`
 
-Creates a way to locate an element by its ARIA role, ARIA attributes and accessible name.
+Locates an element by its ARIA role, ARIA attributes, and accessible name.
 
 ```html
 <h3>Sign up</h3>
@@ -119,8 +119,8 @@ Creates a locator capable of finding an element that has an associated label.
   <input />
 </label>
 
-// aria-label attributes // Take care because this is not a label that users can see on the page, // so the purpose of
-your input must be obvious to visual users.
+// aria-label attributes - Note that this is not a label that users can see on the page, // so the purpose of your input
+must be obvious to visual users.
 <input aria-label="Username" />
 ```
 
@@ -182,7 +182,7 @@ page.getByDisplayValue("Norris");
 
 ### `getByAltText`
 
-Creates a locator capable of finding a element (normally an <img>) that has the given alt text.
+Creates a locator capable of finding an element (normally an `<img>`) that has the given alt text.
 
 ```html
 <img alt="Incredibles 2 Poster" src="/incredibles-2.png" />
@@ -230,7 +230,7 @@ page.getByTestId("custom-element");
 
 ### `nth`
 
-This method returns a new locator that matches only a specific index within a multi-element query result. It's zero based, `nth(0)` selects the first element.
+This method returns a new locator that matches only a specific index within a multi-element query result. It's zero-based, so `nth(0)` selects the first element.
 
 ```html
 <div aria-label="one"><input /><input /><input /></div>
@@ -244,7 +244,7 @@ page.getByRole("textbox").nth(4); // ❌
 
 ### `first`
 
-This method returns a new locator that matches only the first index of a multi-element query result. It is sugar for `nth(0)`.
+This method returns a new locator that matches only the first index of a multi-element query result. It is shorthand for `nth(0)`.
 
 ```html
 <input /> <input /> <input />
@@ -256,7 +256,7 @@ page.getByRole("textbox").first();
 
 ### `last`
 
-This method returns a new locator that matches only the last index of a multi-element query result. It is sugar for `nth(-1)`.
+This method returns a new locator that matches only the last index of a multi-element query result. It is shorthand for `nth(-1)`.
 
 ```html
 <input /> <input /> <input />
@@ -268,7 +268,7 @@ page.getByRole("textbox").last();
 
 ### `has`
 
-This options narrows down the selector to match elements that contain other elements matching provided locator.
+This option narrows down the selector to match elements that contain other elements matching the provided locator.
 
 ```html
 <article>
@@ -285,7 +285,7 @@ page.getByRole("article").has(page.getByText("First")); // ✅
 
 ### `not`
 
-This option narrows down the selector to match elements that do not contain other elements matching provided locator.
+This option narrows down the selector to match elements that do not contain other elements matching the provided locator.
 
 ```html
 <article>
@@ -370,7 +370,7 @@ await page.getByRole("textbox").findAll(); // ✅ [HTMLInputElement, HTMLInputEl
 
 ### `debug`
 
-This method prints a signal element matching the locator's selector.
+This method prints a single element matching the locator's selector.
 
 ```html
 <input />
@@ -386,7 +386,7 @@ page.getByRole("textbox").debug(); // <input />
 
 ### `setup`
 
-This method allows you to configure an instance of userEvent.
+This method allows you to configure an instance of `userEvent`.
 
 ```typescript
 await page.setup({ delay: 200 }).getByRole("button").click();
@@ -398,7 +398,7 @@ await page.setup({ delay: 200 }).getByRole("button").click();
 
 ### `click`
 
-Click on an element.
+Clicks an element.
 
 ```typescript
 await page.getByRole("button").click();
@@ -434,7 +434,7 @@ await page.getByRole("button").tripleClick();
 
 ### `hover`
 
-Hover an element.
+Hovers an element.
 
 ```typescript
 await page.getByRole("button").hover();
@@ -446,7 +446,7 @@ await page.getByRole("button").hover();
 
 ### `unhover`
 
-Unhover an element.
+Unhovers an element.
 
 ```typescript
 await page.getByRole("button").unhover();
@@ -458,7 +458,7 @@ await page.getByRole("button").unhover();
 
 ### `clear`
 
-Clears the input element content.
+Clears the input value.
 
 ```typescript
 await page.getByRole("textbox").clear();
@@ -470,7 +470,7 @@ await page.getByRole("textbox").clear();
 
 ### `type`
 
-Sets the value of the current input, textarea or contenteditable element.
+Types text into an input, textarea, or contenteditable element.
 
 ```typescript
 await page.getByRole("textbox").type("Mr. Bean");
@@ -482,7 +482,7 @@ await page.getByRole("textbox").type("Mr. Bean");
 
 ### `selectOptions`
 
-Select the given options in an HTMLSelectElement or listbox.
+Selects options in a `<select>` element or listbox.
 
 ```html
 <select multiple>
@@ -502,7 +502,7 @@ await page.getByRole("listbox").selectOptions(["1", "C"]);
 
 ### `deselectOptions`
 
-Deselect the given options in an HTMLSelectElement or listbox.
+Deselects options in a `<select>` element or listbox.
 
 ```html
 <select multiple>
@@ -553,15 +553,15 @@ expect(button.query()).not.toBeInTheDocument();
 
 ### Custom Locators
 
-You can extend built-in locators API by defining an object of locator factories. These methods will exist as methods on the page object and any created locator.
+You can extend the built-in locators API by defining an object of locator factories. These methods will be available on the `page` object and any created locator.
 
-These locators can be useful if built-in locators are not enough. For example, when you use a custom framework for your UI.
+These locators can be useful when built-in locators are not enough, for example, when using a custom UI framework.
 
 ```typescript
 import { buildQueries } from "@testing-library/dom";
 import { locators, createQuerySelector, type Locator } from "testing-library-locators";
 
-// Use the navite buildQueryies of the DOM Testing Library to create custom queries
+// Use the native buildQueries of the DOM Testing Library to create custom queries
 const queryAllByDataCy = (container: HTMLElement, id: Matcher, options?: MatcherOptions | undefined) =>
   queryHelpers.queryAllByAttribute("data-cy", container, id, options);
 
@@ -572,7 +572,7 @@ const getMissingError = (_c: Element | null, dataCyValue: string) =>
 
 const queries = [queryAllByDataCy, ...buildQueries(queryAllByDataCy, getMultipleError, getMissingError)];
 
-// Creates a new query selector
+// Creates a new query selector factory
 const DataCyQuerySelector = createQuerySelector(queries);
 
 // Extends the locators
@@ -611,6 +611,47 @@ function getListboxOption(name: string) {
 // Use in tests
 await getListboxOption("First").click();
 ```
+
+## Vitest
+
+If you use `vitest` and `@testing-library/jest-dom`, you can add an extension for better locator support and built-in retry-ability.
+
+### Setup
+
+Import the `vitest` extension in your vitest setup file:
+
+```typescript
+// vitest.setup.ts
+import "testing-library-locators/vitest";
+```
+
+### Usage
+
+`expect.element` is based on `expect.poll(() => element)` from vitest and `waitFor` from `@testing-library/dom`. It works in exactly the same way.
+
+```typescript
+import { page } from "testing-library-locators";
+
+const promise = new Promise((res) => setTimeout(res, 500));
+
+const TestComponent = () => {
+  use(promise);
+
+  return <button>Click me</button>;
+};
+
+render(
+  <Suspense>
+    <TestComponent />
+  </Suspense>,
+);
+
+await expect.element(page.getByRole("button")).toBeInTheDocument();
+```
+
+We recommend to always use `expect.element` when working with `page.getBy*` locators to reduce test flakiness.
+
+Note that `expect.element` accepts options from the `waitFor` from `@testing-library/dom` as a second option.
 
 ## License
 

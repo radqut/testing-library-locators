@@ -93,7 +93,7 @@ describe("Locators", () => {
 
     render(<button />);
 
-    expect(locator.query()).toBe(null);
+    expect(locator.query()).toBeNull();
   });
 
   it("throws an error when do not query a nested element", () => {
@@ -105,7 +105,7 @@ describe("Locators", () => {
       </article>,
     );
 
-    expect(locator.query()).toBe(null);
+    expect(locator.query()).toBeNull();
   });
 
   describe("has", () => {
@@ -225,7 +225,7 @@ describe("Locators", () => {
         .has(page.getByRole("alert").has(page.getByRole("button").has(page.getByText("Close"))))
         .elements();
 
-      expect(elements.map((element) => element.toString())).toEqual([
+      expect(elements.map(String)).toEqual([
         '<article><h2>First</h2><div role="alert"><button>Close</button></div></article>',
         '<article><h2>Third</h2><div role="alert"><button>Close</button></div></article>',
       ]);
@@ -427,7 +427,7 @@ describe("Locators", () => {
 
       const element = page.getByRole("article").has(page.getByText("Third")).query();
 
-      expect(element).toBe(null);
+      expect(element).toBeNull();
     });
 
     it("does not find an element with two contain selectors", () => {
@@ -449,7 +449,7 @@ describe("Locators", () => {
         .has(page.getByRole("button", { name: "Press" }))
         .query();
 
-      expect(element).toBe(null);
+      expect(element).toBeNull();
     });
 
     it("does not find an element with three contain selectors", () => {
@@ -477,7 +477,7 @@ describe("Locators", () => {
         .has(page.getByRole("banner"))
         .query();
 
-      expect(element).toBe(null);
+      expect(element).toBeNull();
     });
 
     it("does not find elements with deep contain selectors", () => {
@@ -544,7 +544,7 @@ describe("Locators", () => {
         .nth(1)
         .query();
 
-      expect(element).toBe(null);
+      expect(element).toBeNull();
     });
 
     it("does not find an element at position and contain selector", () => {
@@ -578,14 +578,14 @@ describe("Locators", () => {
         .has(page.getByRole("heading", { name: "Third" }))
         .query();
 
-      expect(element).toBe(null);
+      expect(element).toBeNull();
     });
   });
 });
 
 describe("async", () => {
   const renderAsyncComponent = async (node: React.ReactNode) => {
-    const promise = new Promise<void>((res) => setTimeout(res, 500));
+    const promise = new Promise((res) => setTimeout(res, 500));
 
     const TestComponent = () => {
       use(promise);
@@ -627,11 +627,7 @@ describe("async", () => {
 
     const elements = await page.getByRole("list").getByRole("listitem").findAll();
 
-    expect(elements.map((element) => element.toString())).toEqual([
-      "<li>First</li>",
-      "<li>Second</li>",
-      "<li>Third</li>",
-    ]);
+    expect(elements.map(String)).toEqual(["<li>First</li>", "<li>Second</li>", "<li>Third</li>"]);
   });
 
   it("finds the first async element", async () => {
@@ -643,7 +639,7 @@ describe("async", () => {
       </ul>,
     );
 
-    const element = await page.getByRole("list").getByRole("listitem").first().findAll();
+    const element = await page.getByRole("list").getByRole("listitem").first().find();
 
     expect(element.toString()).toEqual("<li>First</li>");
   });
@@ -657,7 +653,7 @@ describe("async", () => {
       </ul>,
     );
 
-    const element = await page.getByRole("list").getByRole("listitem").nth(1).findAll();
+    const element = await page.getByRole("list").getByRole("listitem").nth(1).find();
 
     expect(element.toString()).toEqual("<li>Second</li>");
   });
@@ -674,6 +670,119 @@ describe("async", () => {
     const element = await page.getByRole("list").getByRole("listitem").last().find();
 
     expect(element.toString()).toEqual("<li>Third</li>");
+  });
+
+  it("finds and clicks on async button", async () => {
+    const onClick = vi.fn();
+
+    await renderAsyncComponent(<button onClick={onClick}>Click me</button>);
+
+    await page.getByRole("button").click();
+
+    expect(onClick).toHaveBeenCalled();
+  });
+
+  it("finds and double clicks on async button", async () => {
+    const onDoubleClick = vi.fn();
+
+    await renderAsyncComponent(<button onDoubleClick={onDoubleClick}>Click me</button>);
+
+    await page.getByRole("button").dblClick();
+
+    expect(onDoubleClick).toHaveBeenCalled();
+  });
+
+  it("finds and triple clicks on async button", async () => {
+    const onTripleClick = vi.fn();
+
+    await renderAsyncComponent(<button onClick={onTripleClick}>Click me</button>);
+
+    await page.getByRole("button").tripleClick();
+
+    expect(onTripleClick).toHaveBeenCalledTimes(3);
+  });
+
+  it("finds and hovers an async button", async () => {
+    const onMouseEnter = vi.fn();
+
+    await renderAsyncComponent(<button onMouseEnter={onMouseEnter}>Click me</button>);
+
+    await page.getByRole("button").hover();
+
+    expect(onMouseEnter).toHaveBeenCalled();
+  });
+
+  it("finds and hovers an async button", async () => {
+    const onMouseEnter = vi.fn();
+
+    await renderAsyncComponent(<button onMouseEnter={onMouseEnter}>Click me</button>);
+
+    await page.getByRole("button").hover();
+
+    expect(onMouseEnter).toHaveBeenCalled();
+  });
+
+  it("finds, hovers and unhovers an async button", async () => {
+    const onMouseLeave = vi.fn();
+
+    await renderAsyncComponent(<button onMouseLeave={onMouseLeave}>Click me</button>);
+
+    await page.getByRole("button").hover();
+    await page.getByRole("button").unhover();
+
+    expect(onMouseLeave).toHaveBeenCalled();
+  });
+
+  it("finds and clears an async input", async () => {
+    await renderAsyncComponent(<input defaultValue="123" />);
+
+    const input = page.getByRole("textbox");
+
+    await input.clear();
+
+    expect(input.element()).toHaveValue("");
+  });
+
+  it("finds and types an async input", async () => {
+    await renderAsyncComponent(<input />);
+
+    const input = page.getByRole("textbox");
+
+    await input.type("123");
+
+    expect(input.element()).toHaveValue("123");
+  });
+
+  it("finds and selects options", async () => {
+    await renderAsyncComponent(
+      <select multiple>
+        <option value="1">A</option>
+        <option value="2">B</option>
+        <option value="3">C</option>
+      </select>,
+    );
+
+    await page.getByRole("listbox").selectOptions(["1", "C"]);
+
+    expect(page.getByRole("option", { name: "A", selected: true }).element()).toBeInTheDocument();
+    expect(page.getByRole("option", { name: "B", selected: false }).element()).toBeInTheDocument();
+    expect(page.getByRole("option", { name: "C", selected: true }).element()).toBeInTheDocument();
+  });
+
+  it("finds and deselects options", async () => {
+    await renderAsyncComponent(
+      <select multiple defaultValue={["2"]}>
+        <option value="1">A</option>
+        <option value="2">B</option>
+        <option value="3">C</option>
+      </select>,
+    );
+
+    await page.getByRole("listbox").deselectOptions("2");
+
+    expect(page.getByRole("option", { name: "A", selected: false }).element()).toBeInTheDocument();
+    expect(page.getByRole("option", { name: "B", selected: false }).element()).toBeInTheDocument();
+    expect(page.getByRole("option", { name: "C", selected: false }).element()).toBeInTheDocument();
   });
 
   describe("has", () => {
@@ -797,7 +906,7 @@ describe("async", () => {
         .has(page.getByRole("alert").has(page.getByRole("button").has(page.getByText("Close"))))
         .findAll();
 
-      expect(elements.map((element) => element.toString())).toEqual([
+      expect(elements.map(String)).toEqual([
         '<article><h2>First</h2><div role="alert"><button>Close</button></div></article>',
         '<article><h2>Third</h2><div role="alert"><button>Close</button></div></article>',
       ]);

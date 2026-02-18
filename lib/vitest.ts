@@ -1,12 +1,12 @@
 import { expect } from "vitest";
 import { chai, type PromisifyAssertion } from "@vitest/expect";
-import { waitFor } from "@testing-library/dom";
+import { waitFor, type waitForOptions } from "@testing-library/dom";
 import type { Locator } from "./locator";
 
 declare module "vitest" {
   interface ExpectStatic {
-    element<T extends HTMLElement>(locator: Locator<T>): PromisifyAssertion<T>;
-    elements<T extends HTMLElement>(locator: Locator<T>): PromisifyAssertion<T>;
+    element<T extends HTMLElement>(locator: Locator<T>, options?: waitForOptions): PromisifyAssertion<T>;
+    elements<T extends HTMLElement>(locator: Locator<T>, options?: waitForOptions): PromisifyAssertion<T>;
   }
 }
 
@@ -15,7 +15,7 @@ expect.elements = createExpectPoll("many");
 
 // @link https://github.com/vitest-dev/vitest/blob/main/packages/vitest/src/integrations/chai/poll.ts#L48
 function createExpectPoll(mode: "one" | "many") {
-  return function <T extends HTMLElement>(locator: Locator): PromisifyAssertion<T> {
+  return function <T extends HTMLElement>(locator: Locator, options?: waitForOptions): PromisifyAssertion<T> {
     const assertion = expect(mode === "many" ? [] : null);
 
     const proxy: any = new Proxy(assertion, {
@@ -34,7 +34,7 @@ function createExpectPoll(mode: "one" | "many") {
               chai.util.flag(assertion, "object", el);
 
               return assertionFunction.call(assertion, ...args);
-            });
+            }, options);
 
           let resultPromise: Promise<void> | undefined;
 

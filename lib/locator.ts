@@ -189,80 +189,100 @@ export class Locator<T extends HTMLElement = HTMLElement> implements QuerySelect
    * Click on an element. Equivalent to `userEvent.click()`.
    * @see {@link https://testing-library.com/docs/user-event/convenience#click}
    */
-  click() {
-    return this.#options.userEvent.click(this.#selector.element());
+  async click() {
+    const element = await this.#selector.find();
+
+    return this.#options.userEvent.click(element);
   }
 
   /**
    * Triggers a double click event on an element. Equivalent to `userEvent.dblClick()`.
    * @see {@link https://testing-library.com/docs/user-event/convenience#dblclick}
    */
-  dblClick() {
-    return this.#options.userEvent.dblClick(this.#selector.element());
+  async dblClick() {
+    const element = await this.#selector.find();
+
+    return this.#options.userEvent.dblClick(element);
   }
 
   /**
    * Triggers a triple click event on an element. Equivalent to `userEvent.tripleClick()`.
    * @see {@link https://testing-library.com/docs/user-event/convenience#tripleclick}
    */
-  tripleClick() {
-    return this.#options.userEvent.tripleClick(this.#selector.element());
+  async tripleClick() {
+    const element = await this.#selector.find();
+
+    return this.#options.userEvent.tripleClick(element);
   }
 
   /**
    * Hover an element. Equivalent to `userEvent.hover()`.
    * @see {@link https://testing-library.com/docs/user-event/convenience#hover}
    */
-  hover() {
-    return this.#options.userEvent.hover(this.#selector.element());
+  async hover() {
+    const element = await this.#selector.find();
+
+    return this.#options.userEvent.hover(element);
   }
 
   /**
    * Unhover an element. Equivalent to `userEvent.unhover()`.
    * @see {@link https://testing-library.com/docs/user-event/convenience#unhover}
    */
-  unhover() {
-    return this.#options.userEvent.unhover(this.#selector.element());
+  async unhover() {
+    const element = await this.#selector.find();
+
+    return this.#options.userEvent.unhover(element);
   }
 
   /**
    * Clears the input element content. Equivalent to `userEvent.clear()`.
    * @see {@link https://testing-library.com/docs/user-event/utility#clear}
    */
-  clear() {
-    return this.#options.userEvent.clear(this.#selector.element());
+  async clear() {
+    const element = await this.#selector.find();
+
+    return this.#options.userEvent.clear(element);
   }
 
   /**
    * Sets the value of the current input, textarea or contenteditable element. Equivalent to `userEvent.type()`.
    * @see {@link https://testing-library.com/docs/user-event/utility#type}
    */
-  type(text: string) {
-    return this.#options.userEvent.type(this.#selector.element(), text);
+  async type(text: string) {
+    const element = await this.#selector.find();
+
+    return this.#options.userEvent.type(element, text);
   }
 
   /**
    * Select the given options in an HTMLSelectElement or listbox. Equivalent to `userEvent.selectOptions()`.
    * @see {@link https://testing-library.com/docs/user-event/utility#-selectoptions-deselectoptions}
    */
-  selectOptions(...args: Parameters<BoundFunction<UserEvent["selectOptions"]>>) {
-    return this.#options.userEvent.selectOptions(this.#selector.element(), ...args);
+  async selectOptions(...args: Parameters<BoundFunction<UserEvent["selectOptions"]>>) {
+    const element = await this.#selector.find();
+
+    return this.#options.userEvent.selectOptions(element, ...args);
   }
 
   /**
    * Deselect the given options in an HTMLSelectElement or listbox. Equivalent to `userEvent.deselectOptions()`.
    * @see {@link https://testing-library.com/docs/user-event/utility#-selectoptions-deselectoptions}
    */
-  deselectOptions(...args: Parameters<BoundFunction<UserEvent["deselectOptions"]>>) {
-    return this.#options.userEvent.deselectOptions(this.#selector.element(), ...args);
+  async deselectOptions(...args: Parameters<BoundFunction<UserEvent["deselectOptions"]>>) {
+    const element = await this.#selector.find();
+
+    return this.#options.userEvent.deselectOptions(element, ...args);
   }
 
   /**
    * Equivalent to `userEvent.upload()`.
    * @see {@link https://testing-library.com/docs/user-event/utility#upload}
    */
-  upload(...args: Parameters<BoundFunction<UserEvent["upload"]>>) {
-    return this.#options.userEvent.upload(this.#selector.element(), ...args);
+  async upload(...args: Parameters<BoundFunction<UserEvent["upload"]>>) {
+    const element = await this.#selector.find();
+
+    return this.#options.userEvent.upload(element, ...args);
   }
 
   clone<T extends HTMLElement = HTMLElement>(selector: QuerySelector<T>, options?: Partial<LocatorOptions>) {
