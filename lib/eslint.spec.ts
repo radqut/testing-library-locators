@@ -90,7 +90,7 @@ ruleTester.run("prefer-vitest-matches", preferVitestMatches, {
   valid: [
     "expect.element(page.getByRole('button')).toBeInTheDocument()",
     "expect.element(page.getByRole('button')).not.toBeInTheDocument()",
-    "expect.elements(page.getByRole('button')).toHaveLength(2)",
+    "expect.element(page.getByRole('button')).toHaveLength(2)",
   ],
   invalid: [
     {
@@ -105,7 +105,7 @@ ruleTester.run("prefer-vitest-matches", preferVitestMatches, {
     },
     {
       code: "expect(page.getByRole('button').elements()).toHaveLength(2)",
-      output: "expect.elements(page.getByRole('button')).toHaveLength(2)",
+      output: "expect.element(page.getByRole('button')).toHaveLength(2)",
       errors: [{ messageId: "useVitestMatches" }],
     },
     {
@@ -115,7 +115,7 @@ ruleTester.run("prefer-vitest-matches", preferVitestMatches, {
     },
     {
       code: "expect(page.getByRole('button').findAll()).resolves.toHaveLength(2)",
-      output: "expect.elements(page.getByRole('button')).toHaveLength(2)",
+      output: "expect.element(page.getByRole('button')).toHaveLength(2)",
       errors: [{ messageId: "useVitestMatches" }],
     },
   ],

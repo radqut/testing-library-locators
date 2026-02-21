@@ -7,16 +7,14 @@ const createRule = ESLintUtils.RuleCreator(
   (name) => `https://github.com/radqut/testing-library-locators/blob/main/lib/eslint/rules/${name}.ts`,
 );
 
-const ELEMENT_METHODS = ["element", "query", "find"];
-const ELEMENTS_METHODS = ["elements", "findAll"];
+const ELEMENT_METHODS = ["element", "query", "elements", "find", "findAll"];
 
 export const preferVitestMatches: RuleModule<MessageIds> = createRule({
   name: "prefer-vitest-matches",
   meta: {
     type: "suggestion",
     docs: {
-      description:
-        "Prefer expect.element() and expect.elements() over expect with .element(), .query(), .elements(), .find(), .findAll()",
+      description: "Prefer expect.element() over expect with .element(), .query(), .elements(), .find(), .findAll()",
     },
     messages: {
       useVitestMatches: "Use '{{replacement}}' instead",
@@ -27,11 +25,7 @@ export const preferVitestMatches: RuleModule<MessageIds> = createRule({
   defaultOptions: [],
   create(context) {
     function isLocatorMethod(name: string): boolean {
-      return ELEMENT_METHODS.includes(name) || ELEMENTS_METHODS.includes(name);
-    }
-
-    function getExpectType(methodName: string): "element" | "elements" {
-      return ELEMENTS_METHODS.includes(methodName) ? "elements" : "element";
+      return ELEMENT_METHODS.includes(name);
     }
 
     return {
@@ -119,7 +113,7 @@ export const preferVitestMatches: RuleModule<MessageIds> = createRule({
           .map((arg: any) => sourceCode.slice(arg.range[0], arg.range[1]))
           .join(", ");
 
-        const expectType = getExpectType(methodName);
+        const expectType = "element";
 
         let replacement: string;
         const matcherCall = matcherArgsText ? `${matcherName}(${matcherArgsText})` : `${matcherName}()`;

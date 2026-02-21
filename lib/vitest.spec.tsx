@@ -27,7 +27,7 @@ describe("vitest", () => {
       </ul>,
     );
 
-    await expect.elements(page.getByRole("listitem")).toHaveLength(3);
+    await expect.element(page.getByRole("listitem")).toHaveLength(3);
   });
 
   it("asserts when elements are not found", async () => {
@@ -37,7 +37,7 @@ describe("vitest", () => {
       </ul>,
     );
 
-    await expect(() => expect.elements(page.getByRole("listitem")).toHaveLength(3)).rejects.toThrow(
+    await expect(() => expect.element(page.getByRole("listitem")).toHaveLength(3)).rejects.toThrow(
       /expected \[ <li><\/li> \] to have a length of 3 but got 1/,
     );
   });
@@ -87,7 +87,7 @@ describe("vitest", () => {
       ),
     );
 
-    await expect.elements(page.getByRole("listitem")).toHaveLength(3);
+    await expect.element(page.getByRole("listitem")).toHaveLength(3);
 
     expect(screen.getAllByRole("listitem")).toHaveLength(3);
   });
@@ -166,7 +166,7 @@ describe("vitest", () => {
 
     render(<TestComponent />);
 
-    await expect.elements(page.getByRole("listitem")).toHaveLength(5);
+    await expect.element(page.getByRole("listitem")).toHaveLength(5);
 
     expect(screen.getAllByRole("listitem")).toHaveLength(5);
   });
@@ -201,7 +201,7 @@ describe("vitest", () => {
 
     render(<TestComponent />);
 
-    await expect.elements(page.getByRole("listitem")).not.toHaveLength(2);
+    await expect.element(page.getByRole("listitem")).not.toHaveLength(2);
 
     expect(screen.getAllByRole("listitem")).toHaveLength(5);
   });
@@ -258,7 +258,7 @@ describe("vitest", () => {
 
     render(<TestComponent />);
 
-    await expect(() => expect.elements(page.getByRole("listitem"), { timeout: 0 }).toHaveLength(5)).rejects.toThrow(
+    await expect(() => expect.element(page.getByRole("listitem"), { timeout: 0 }).toHaveLength(5)).rejects.toThrow(
       /expected \[ <li><\/li>, <li><\/li> \] to have a length of 5 but got 2/,
     );
   });

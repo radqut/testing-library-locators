@@ -6,17 +6,15 @@ import type { Locator } from "./locator";
 declare module "vitest" {
   interface ExpectStatic {
     element<T extends HTMLElement>(locator: Locator<T>, options?: waitForOptions): PromisifyAssertion<T>;
-    elements<T extends HTMLElement>(locator: Locator<T>, options?: waitForOptions): PromisifyAssertion<T>;
   }
 }
 
-expect.element = createExpectPoll("one");
-expect.elements = createExpectPoll("many");
+expect.element = createExpectPoll();
 
 // @link https://github.com/vitest-dev/vitest/blob/main/packages/vitest/src/integrations/chai/poll.ts#L48
-function createExpectPoll(mode: "one" | "many") {
+function createExpectPoll() {
   return function <T extends HTMLElement>(locator: Locator, options?: waitForOptions): PromisifyAssertion<T> {
-    const assertion = expect(mode === "many" ? [] : null);
+    const assertion = expect(null);
 
     const proxy: any = new Proxy(assertion, {
       get(target, key, receiver) {
@@ -27,9 +25,10 @@ function createExpectPoll(mode: "one" | "many") {
         }
 
         return function (this: any, ...args: any[]) {
+          const isLengthAssertion = key === "toHaveLength";
           const promise = () =>
             waitFor(async () => {
-              const el = mode === "many" ? locator.elements() : locator.query();
+              const el = isLengthAssertion ? locator.elements() : locator.query();
 
               chai.util.flag(assertion, "object", el);
 
